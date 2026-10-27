@@ -1,0 +1,901 @@
+/* ============================================================
+   Legenda Eldoria — CSS Custom Properties & Global Reset
+   Task 2.1 | Requirements: 9.6, 10.2
+   ============================================================ */
+
+/* ── Custom Properties ──────────────────────────────────────── */
+:root {
+  /* Background colors */
+  --color-bg-primary:   #0d0d1a;
+  --color-bg-secondary: #1a1a2e;
+  --color-bg-tertiary:  #16213e;
+
+  /* Border colors */
+  --color-border:        #2a2a4a;
+  --color-border-accent: #4a3f6b;
+
+  /* Text colors */
+  --color-text-primary:   #e8e8f0;
+  --color-text-secondary: #9090a8;
+  --color-text-accent:    #c9a84c;   /* gold */
+  --color-text-purple:    #9b72cf;   /* purple accent */
+
+  /* HP / Mana / EXP bar colors */
+  --color-hp-bar:   #3ddc84;
+  --color-mana-bar: #4a90d9;
+  --color-exp-bar:  #c9a84c;
+
+  /* Button colors */
+  --color-btn-primary:  #4a3f6b;
+  --color-btn-hover:    #5e527f;
+  --color-btn-disabled: #2a2a4a;
+
+  /* Status / feedback colors */
+  --color-warning: #e05c4a;   /* also used for critical HP */
+  --color-success: #3ddc84;
+  --color-error:   #e05c4a;
+
+  /* Typography */
+  --font-primary: 'Georgia', serif;
+  --font-ui:      'Courier New', monospace;
+
+  /* Spacing */
+  --spacing-sm: 0.375rem;   /*  6px */
+  --spacing-md: 0.75rem;    /* 12px */
+  --spacing-lg: 1.25rem;    /* 20px */
+  --spacing-xl: 2rem;       /* 32px */
+
+  /* Border radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+
+  /* Transitions */
+  --transition-fast:   0.15s ease;
+  --transition-normal: 0.25s ease;
+  --transition-slow:   0.4s ease;
+}
+
+/* ── Global Reset ───────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ── Base ───────────────────────────────────────────────────── */
+body {
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  font-family: var(--font-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* ============================================================
+   Screen Containers, Buttons & Form Elements
+   Task 2.2 | Requirements: 9.2, 9.6
+   ============================================================ */
+
+/* ── Keyframe Animations ────────────────────────────────────── */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ── Screen Containers ──────────────────────────────────────── */
+.screen {
+  display: block;
+  animation: fadeIn 0.2s ease;
+}
+
+/* General screen layout — centered column with max-width */
+.screen-content {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: var(--spacing-xl) var(--spacing-lg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-lg);
+}
+
+/* ── Button — Base Action Style ─────────────────────────────── */
+.btn-action {
+  display: inline-block;
+  padding: var(--spacing-md) var(--spacing-lg);
+  background-color: var(--color-btn-primary);
+  border: 1px solid var(--color-border-accent);
+  border-radius: var(--radius-md);
+  color: var(--color-text-primary);
+  font-family: var(--font-ui);
+  font-size: 0.95rem;
+  cursor: pointer;
+  text-align: center;
+  transition:
+    background-color var(--transition-fast),
+    transform var(--transition-fast);
+}
+
+.btn-action:hover:not(:disabled) {
+  background-color: var(--color-btn-hover);
+}
+
+.btn-action:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.btn-action:disabled {
+  background-color: var(--color-btn-disabled);
+  color: var(--color-text-secondary);
+  border-color: var(--color-border);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* ── Menu Screen ────────────────────────────────────────────── */
+#screen-menu {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-xl);
+  gap: var(--spacing-lg);
+}
+
+#screen-menu h1 {
+  font-family: var(--font-primary);
+  font-size: clamp(1.8rem, 5vw, 3rem);
+  color: var(--color-text-accent);
+  text-align: center;
+  margin-bottom: var(--spacing-lg);
+}
+
+.menu-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  width: 100%;
+  max-width: 280px;
+}
+
+.menu-buttons .btn-action {
+  width: 100%;
+  padding: var(--spacing-md) var(--spacing-xl);
+  font-size: 1rem;
+}
+
+/* ── Form Elements ──────────────────────────────────────────── */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  width: 100%;
+  max-width: 400px;
+}
+
+label {
+  font-family: var(--font-ui);
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+#input-char-name {
+  padding: var(--spacing-md);
+  background-color: var(--color-bg-tertiary);
+  border: 1px solid var(--color-border-accent);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-primary);
+  font-family: var(--font-primary);
+  font-size: 1rem;
+  width: 100%;
+  transition: border-color var(--transition-fast);
+}
+
+#input-char-name:focus {
+  outline: none;
+  border-color: var(--color-text-purple);
+}
+
+/* Error messages */
+.error-message {
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+  color: var(--color-error);
+  min-height: 1.2em; /* reserve space to avoid layout jump */
+}
+
+/* ── Character Creation Screens ─────────────────────────────── */
+
+/* Class selection cards container */
+#class-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-lg);
+  justify-content: center;
+  width: 100%;
+  max-width: 720px;
+}
+
+/* Individual class card */
+.class-card {
+  background-color: var(--color-bg-secondary);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  flex: 1 1 180px;
+  max-width: 220px;
+  cursor: pointer;
+  transition:
+    border-color var(--transition-fast),
+    background-color var(--transition-fast);
+  text-align: center;
+}
+
+.class-card:hover {
+  border-color: var(--color-border-accent);
+  background-color: var(--color-bg-tertiary);
+}
+
+.class-card.selected {
+  border-color: var(--color-text-accent);
+  background-color: var(--color-bg-tertiary);
+}
+
+.class-card h3 {
+  font-family: var(--font-primary);
+  color: var(--color-text-accent);
+  margin-bottom: var(--spacing-sm);
+}
+
+.class-card p {
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--spacing-md);
+}
+
+.class-card .class-stats {
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  color: var(--color-text-primary);
+  text-align: left;
+  line-height: 1.8;
+}
+
+/* Character summary */
+#summary-content {
+  background-color: var(--color-bg-secondary);
+  border: 1px solid var(--color-border-accent);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl);
+  width: 100%;
+  max-width: 400px;
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  line-height: 2;
+  color: var(--color-text-primary);
+}
+
+#summary-content .summary-label {
+  color: var(--color-text-secondary);
+}
+
+#summary-content .summary-value {
+  color: var(--color-text-accent);
+  font-weight: bold;
+}
+
+/* ── Confirmation Modal ──────────────────────────────────────── */
+#modal-confirm {
+  display: none; /* shown via JS by setting display: flex */
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: var(--spacing-lg);
+}
+
+/* When JS shows the modal, it sets display: flex */
+#modal-confirm.is-active {
+  display: flex;
+}
+
+.modal-content {
+  background-color: var(--color-bg-secondary);
+  border: 1px solid var(--color-border-accent);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl);
+  max-width: 400px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+  text-align: center;
+}
+
+#modal-message {
+  font-family: var(--font-primary);
+  font-size: 1rem;
+  color: var(--color-text-primary);
+  line-height: 1.5;
+}
+
+.modal-buttons {
+  display: flex;
+  gap: var(--spacing-md);
+  justify-content: center;
+}
+
+.modal-buttons .btn-action {
+  min-width: 100px;
+}
+
+#modal-btn-confirm {
+  background-color: var(--color-warning);
+  border-color: var(--color-warning);
+}
+
+#modal-btn-confirm:hover:not(:disabled) {
+  background-color: #c04030;
+  border-color: #c04030;
+}
+
+
+/* ============================================================
+   Exploration Layout — 3-Column & Panels
+   Task 2.3 | Requirements: 3.3, 4.1, 9.6
+   ============================================================ */
+
+/* ── Base button styles (for HTML button elements in-game screens) ── */
+button {
+  display: inline-block;
+  padding: var(--spacing-md) var(--spacing-lg);
+  background-color: var(--color-btn-primary);
+  border: 1px solid var(--color-border-accent);
+  border-radius: var(--radius-md);
+  color: var(--color-text-primary);
+  font-family: var(--font-ui);
+  font-size: 0.95rem;
+  cursor: pointer;
+  text-align: center;
+  transition:
+    background-color var(--transition-fast),
+    transform var(--transition-fast);
+}
+
+button:hover:not(:disabled) {
+  background-color: var(--color-btn-hover);
+}
+
+button:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+button:disabled {
+  background-color: var(--color-btn-disabled);
+  color: var(--color-text-secondary);
+  border-color: var(--color-border);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* ── Exploration screen wrapper ─────────────────────────────── */
+#screen-exploration {
+  padding: var(--spacing-md);
+}
+
+/* ── Exploration layout: mobile-first → 2-col → 3-col ───────── */
+.exploration-layout {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  min-height: 100vh;
+}
+
+/* ≥ 640px — 2-column grid (stats | narration+quest stacked) */
+@media (min-width: 640px) {
+  .exploration-layout {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    grid-template-areas:
+      "stats  narration"
+      "stats  quest";
+    align-items: start;
+  }
+
+  #panel-stats      { grid-area: stats; }
+  #panel-narration  { grid-area: narration; }
+  #panel-quest      { grid-area: quest; }
+}
+
+/* ≥ 1024px — 3-column grid: sidebar | main | sidebar */
+@media (min-width: 1024px) {
+  .exploration-layout {
+    grid-template-columns: 200px 1fr 200px;
+    grid-template-areas: "stats narration quest";
+  }
+
+  #panel-quest { grid-area: quest; }
+}
+
+/* ── Panel base styles ───────────────────────────────────────── */
+.panel {
+  background-color: var(--color-bg-secondary);
+  border: 1px solid var(--color-border-accent);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+  color: var(--color-text-primary);
+}
+
+.panel h2,
+.panel h3 {
+  font-family: var(--font-primary);
+  color: var(--color-text-accent);
+  margin-bottom: var(--spacing-sm);
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* ── Panel Stats (left sidebar) ─────────────────────────────── */
+#panel-stats {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  background-color: var(--color-bg-tertiary);
+}
+
+/* Stat row: label | bar | value */
+.stat-row {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+}
+
+.stat-row > span:first-child {
+  flex: 0 0 36px; /* fixed label width */
+}
+
+.stat-row > span:last-child {
+  flex: 0 0 auto;
+  color: var(--color-text-primary);
+  white-space: nowrap;
+  min-width: 40px;
+  text-align: right;
+}
+
+/* ── HP / Mana / EXP bars ───────────────────────────────────── */
+.bar-container {
+  flex: 1;
+  background-color: var(--color-bg-primary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  height: 10px;
+  overflow: hidden;
+}
+
+.bar {
+  height: 100%;
+  width: 100%; /* overridden inline by JS */
+  border-radius: var(--radius-sm);
+  transition: width var(--transition-normal);
+}
+
+.hp-bar   { background-color: var(--color-hp-bar); }
+.mana-bar { background-color: var(--color-mana-bar); }
+.exp-bar  { background-color: var(--color-exp-bar); }
+
+/* Critical HP state */
+.hp-bar.critical {
+  background-color: var(--color-warning);
+}
+
+/* ── Stat Details (level / atk / def / gold) ─────────────────── */
+.stat-details {
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+  line-height: 1.8;
+  margin-top: var(--spacing-sm);
+}
+
+.stat-details span {
+  color: var(--color-text-primary);
+  font-weight: bold;
+}
+
+/* Inventory button inside stats panel */
+#btn-open-inventory {
+  margin-top: var(--spacing-sm);
+  width: 100%;
+  font-size: 0.8rem;
+  padding: var(--spacing-sm) var(--spacing-md);
+}
+
+/* ── Panel Narration (center) ───────────────────────────────── */
+#panel-narration {
+  background-color: var(--color-bg-secondary);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+#panel-narration h2 {
+  font-size: 1.2rem;
+}
+
+#narration-text {
+  font-family: var(--font-primary);
+  font-size: 0.95rem;
+  color: var(--color-text-secondary);
+  line-height: 1.7;
+  flex: 1;
+}
+
+/* Action buttons container — column on mobile, wrapping row on wider */
+.action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-md);
+}
+
+@media (min-width: 640px) {
+  .action-buttons {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .action-buttons button {
+    flex: 1 1 auto;
+    min-width: 140px;
+  }
+}
+
+/* ── Panel Quest (right sidebar) ────────────────────────────── */
+#panel-quest {
+  background-color: var(--color-bg-tertiary);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.quest-title {
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  color: var(--color-text-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: var(--spacing-sm);
+}
+
+.quest-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-family: var(--font-ui);
+  font-size: 0.82rem;
+  color: var(--color-text-secondary);
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.quest-list li {
+  display: flex;
+  align-items: center;
+  gap: 0.3em;
+  padding: 0.15rem 0;
+}
+
+/* Crystal indicator: ○ = not obtained, ● = obtained */
+.quest-list span {
+  color: var(--color-text-purple);
+  font-size: 0.9rem;
+}
+
+/* ============================================================
+   Combat Screen
+   Task 2.3 | Requirements: 4.1, 9.6
+   ============================================================ */
+
+#screen-combat {
+  padding: var(--spacing-md) var(--spacing-lg);
+  max-width: 860px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+#screen-combat h2 {
+  font-family: var(--font-primary);
+  color: var(--color-text-accent);
+  text-align: center;
+  font-size: 1.4rem;
+}
+
+/* 2-column player vs enemy layout */
+.combat-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-md);
+}
+
+.combat-stats {
+  background-color: var(--color-bg-secondary);
+  border: 1px solid var(--color-border-accent);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+}
+
+.combat-stats h3 {
+  font-family: var(--font-primary);
+  color: var(--color-text-accent);
+  font-size: 1rem;
+  margin-bottom: var(--spacing-sm);
+}
+
+/* Player stats — slight blue tint */
+.combat-player {
+  border-color: var(--color-mana-bar);
+}
+
+/* Enemy stats — slight red tint */
+.combat-enemy {
+  border-color: var(--color-warning);
+}
+
+/* Battle log */
+#battle-log {
+  background-color: var(--color-bg-primary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+  overflow-y: auto;
+  max-height: 250px;
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+/* Combat action buttons — flex row with gap */
+#combat-actions {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+  justify-content: center;
+}
+
+#combat-actions button {
+  flex: 1 1 120px;
+  max-width: 180px;
+}
+
+/* ============================================================
+   Inventory Screen
+   Task 2.3 | Requirements: 9.6
+   ============================================================ */
+
+#screen-inventory {
+  padding: var(--spacing-md) var(--spacing-lg);
+  max-width: 600px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+#screen-inventory h2 {
+  font-family: var(--font-primary);
+  color: var(--color-text-accent);
+  text-align: center;
+  font-size: 1.4rem;
+}
+
+/* Inventory list — flex column */
+#inventory-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+/* Individual inventory item row */
+.inventory-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  gap: var(--spacing-md);
+}
+
+.inventory-item .item-name {
+  flex: 1;
+  color: var(--color-text-primary);
+}
+
+.inventory-item .item-quantity {
+  color: var(--color-text-secondary);
+  min-width: 3ch;
+  text-align: right;
+}
+
+.inventory-item .item-use-btn {
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-size: 0.8rem;
+  flex: 0 0 auto;
+}
+
+/* Close inventory button */
+#btn-close-inventory {
+  align-self: center;
+  padding: var(--spacing-md) var(--spacing-xl);
+}
+
+/* ============================================================
+   Game Over & Ending Screens
+   Task 2.3 supplemental | Requirements: 9.6
+   ============================================================ */
+
+#screen-game-over,
+#screen-ending {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-xl);
+  gap: var(--spacing-lg);
+  text-align: center;
+}
+
+#screen-game-over h2 {
+  font-family: var(--font-primary);
+  color: var(--color-warning);
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+}
+
+#screen-ending h2 {
+  font-family: var(--font-primary);
+  color: var(--color-text-accent);
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+}
+
+.game-over-message,
+.ending-content {
+  font-family: var(--font-primary);
+  font-size: 1rem;
+  color: var(--color-text-secondary);
+  max-width: 480px;
+  line-height: 1.7;
+}
+
+.game-over-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+  justify-content: center;
+}
+
+/* ============================================================
+   Level-Up Notification, Warning Banner & Screen Polish
+   Task 2.4 | Requirements: 5.4, 9.6
+   ============================================================ */
+
+/* ── keyframes ──────────────────────────────────────────────── */
+@keyframes popIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+/* ── Level-Up Notice ────────────────────────────────────────── */
+.level-up-notice {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  /* translate is baked into the keyframe so the element rests correctly */
+  transform: translate(-50%, -50%);
+  z-index: 2000;
+
+  animation: popIn 0.3s ease both;
+
+  background-color: var(--color-text-accent); /* gold */
+  color: var(--color-bg-primary);             /* dark text on gold */
+  border: 3px solid #f0d070;
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl) calc(var(--spacing-xl) * 1.5);
+
+  text-align: center;
+  font-family: var(--font-primary);
+  font-size: clamp(1.2rem, 3vw, 1.6rem);
+  font-weight: bold;
+  line-height: 1.5;
+
+  /* max width so it never spans the full viewport */
+  max-width: min(480px, 90vw);
+  width: max-content;
+
+  /* subtle outer glow */
+  box-shadow:
+    0 0 0 4px rgba(201, 168, 76, 0.35),
+    0 8px 32px rgba(0, 0, 0, 0.6);
+}
+
+.level-up-notice .notice-title {
+  display: block;
+  font-size: 1.1em;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: var(--spacing-sm);
+}
+
+.level-up-notice .notice-details {
+  display: block;
+  font-family: var(--font-ui);
+  font-size: 0.8em;
+  font-weight: normal;
+  color: rgba(13, 13, 26, 0.85); /* slightly softer dark */
+  margin-top: var(--spacing-sm);
+}
+
+/* ── Warning Banner (localStorage unavailable) ──────────────── */
+.warning-banner {
+  background-color: var(--color-warning);
+  color: var(--color-text-primary);
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  text-align: center;
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-radius: var(--radius-sm);
+  /* sits below fixed overlays but above regular content */
+  position: relative;
+  z-index: 500;
+  line-height: 1.5;
+}
+
+/* ── Game Over screen — completed polish ────────────────────── */
+#screen-game-over {
+  animation: fadeIn 0.4s ease;
+}
+
+/* ── Ending screen — completed polish ───────────────────────── */
+#screen-ending {
+  animation: fadeIn 0.4s ease;
+}
+
+.ending-content {
+  color: var(--color-text-primary);
+  font-size: 1.05rem;
+}

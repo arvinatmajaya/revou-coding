@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Legenda Eldoria</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+
+    <!-- Screen: Menu Awal -->
+    <div id="screen-menu" class="screen">
+      <h1>Legenda Eldoria</h1>
+      <p>Kerajaan Eldoria membutuhkan pahlawan. Akankah kamu menjawab panggilannya?</p>
+      <div class="menu-buttons">
+        <button id="btn-new-game">New Game</button>
+        <button id="btn-continue" disabled>Continue</button>
+        <button id="btn-reset">Reset</button>
+      </div>
+    </div>
+
+    <!-- Screen: Input Nama Karakter -->
+    <div id="screen-char-name" class="screen" style="display:none">
+      <h2>Siapa namamu, Petualang?</h2>
+      <div class="form-group">
+        <label for="input-char-name">Nama Karakter (1–20 karakter)</label>
+        <input type="text" id="input-char-name" maxlength="20" placeholder="Masukkan nama karaktermu" />
+        <span id="error-char-name" class="error-message" role="alert"></span>
+      </div>
+      <button id="btn-submit-name">Lanjutkan</button>
+    </div>
+
+    <!-- Screen: Pemilihan Class -->
+    <div id="screen-char-class" class="screen" style="display:none">
+      <h2>Pilih Class Karaktermu</h2>
+      <div id="class-options" class="class-options">
+        <!-- Kartu class dirender oleh JS via createElement -->
+      </div>
+      <span id="error-class" class="error-message" role="alert"></span>
+      <button id="btn-confirm-class">Konfirmasi Pilihan</button>
+    </div>
+
+    <!-- Screen: Ringkasan Karakter -->
+    <div id="screen-char-summary" class="screen" style="display:none">
+      <h2>Ringkasan Karakter</h2>
+      <div id="summary-content" class="summary-content">
+        <!-- Diisi oleh JS via setTextSafe / createElement -->
+      </div>
+      <button id="btn-start-game">Mulai Petualangan</button>
+    </div>
+
+    <!-- Screen: Eksplorasi -->
+    <div id="screen-exploration" class="screen" style="display:none">
+      <div class="exploration-layout">
+
+        <!-- Sidebar Kiri: Stats Karakter -->
+        <aside id="panel-stats" class="panel panel-stats">
+          <h3>Statistik</h3>
+          <div class="stat-row">
+            <span>HP</span>
+            <div class="bar-container">
+              <div id="bar-hp" class="bar hp-bar"></div>
+            </div>
+            <span id="stat-hp">—</span>
+          </div>
+          <div class="stat-row">
+            <span>Mana</span>
+            <div class="bar-container">
+              <div id="bar-mana" class="bar mana-bar"></div>
+            </div>
+            <span id="stat-mana">—</span>
+          </div>
+          <div class="stat-row">
+            <span>EXP</span>
+            <div class="bar-container">
+              <div id="bar-exp" class="bar exp-bar"></div>
+            </div>
+            <span id="stat-exp">—</span>
+          </div>
+          <div class="stat-details">
+            <p>Level: <span id="stat-level">—</span></p>
+            <p>ATK: <span id="stat-attack">—</span></p>
+            <p>DEF: <span id="stat-defense">—</span></p>
+            <p>Gold: <span id="stat-gold">—</span></p>
+          </div>
+          <button id="btn-open-inventory">Buka Inventory</button>
+        </aside>
+
+        <!-- Panel Tengah: Narasi & Aksi -->
+        <main id="panel-narration" class="panel panel-narration">
+          <h2 id="location-name">—</h2>
+          <p id="narration-text"></p>
+          <div id="action-buttons" class="action-buttons">
+            <!-- Tombol aksi dirender oleh JS -->
+          </div>
+        </main>
+
+        <!-- Sidebar Kanan: Quest -->
+        <aside id="panel-quest" class="panel panel-quest">
+          <h3>Quest</h3>
+          <p class="quest-title">Kristal Kuno</p>
+          <ul class="quest-list">
+            <li>Crystal Shard 1: <span id="quest-crystal1">○</span></li>
+            <li>Crystal Shard 2: <span id="quest-crystal2">○</span></li>
+            <li>Crystal Shard 3: <span id="quest-crystal3">○</span></li>
+          </ul>
+          <p class="quest-title">Tujuan Akhir</p>
+          <ul class="quest-list">
+            <li>Dark Lord: <span id="quest-darkLord">Belum dikalahkan</span></li>
+          </ul>
+        </aside>
+
+      </div>
+    </div>
+
+    <!-- Screen: Pertarungan -->
+    <div id="screen-combat" class="screen" style="display:none">
+      <h2>Pertarungan!</h2>
+      <div class="combat-layout">
+
+        <!-- Stats Pemain -->
+        <div id="combat-player-stats" class="combat-stats combat-player">
+          <h3 id="combat-player-name">—</h3>
+          <p>HP: <span id="combat-player-hp">—</span></p>
+          <div class="bar-container">
+            <div id="combat-bar-hp" class="bar hp-bar"></div>
+          </div>
+          <p>Mana: <span id="combat-player-mana">—</span></p>
+          <div class="bar-container">
+            <div id="combat-bar-mana" class="bar mana-bar"></div>
+          </div>
+        </div>
+
+        <!-- Stats Musuh -->
+        <div id="combat-enemy-stats" class="combat-stats combat-enemy">
+          <h3 id="combat-enemy-name">—</h3>
+          <p>HP: <span id="combat-enemy-hp">—</span></p>
+          <div class="bar-container">
+            <div id="combat-bar-enemy-hp" class="bar hp-bar enemy-hp-bar"></div>
+          </div>
+          <p>ATK: <span id="combat-enemy-attack">—</span></p>
+          <p>DEF: <span id="combat-enemy-defense">—</span></p>
+        </div>
+
+      </div>
+
+      <!-- Battle Log -->
+      <div id="battle-log" class="battle-log" aria-live="polite" aria-label="Battle log">
+        <!-- Entri log dirender oleh JS via createElement -->
+      </div>
+
+      <!-- Aksi Combat -->
+      <div id="combat-actions" class="combat-actions">
+        <button id="btn-attack">⚔ Serang</button>
+        <button id="btn-skill">✨ Skill</button>
+        <button id="btn-use-potion">🧪 Gunakan Potion</button>
+        <button id="btn-flee">🏃 Kabur</button>
+      </div>
+    </div>
+
+    <!-- Screen: Inventory -->
+    <div id="screen-inventory" class="screen" style="display:none">
+      <h2>Inventory</h2>
+      <div id="inventory-list" class="inventory-list">
+        <!-- Item dirender oleh JS via createElement -->
+      </div>
+      <button id="btn-close-inventory">Tutup Inventory</button>
+    </div>
+
+    <!-- Screen: Game Over -->
+    <div id="screen-game-over" class="screen" style="display:none">
+      <h2>Game Over</h2>
+      <div id="game-over-message" class="game-over-message">
+        <!-- Pesan diisi oleh JS via setTextSafe -->
+      </div>
+      <div class="game-over-buttons">
+        <button id="btn-load-save">Muat Save Terakhir</button>
+        <button id="btn-restart">Mulai Ulang</button>
+      </div>
+    </div>
+
+    <!-- Screen: Ending -->
+    <div id="screen-ending" class="screen" style="display:none">
+      <h2>Tamat</h2>
+      <div id="ending-content" class="ending-content">
+        <!-- Konten ending diisi oleh JS via setTextSafe -->
+      </div>
+      <button id="btn-play-again">Main Lagi</button>
+    </div>
+
+    <!-- Modal Konfirmasi (shared) -->
+    <div id="modal-confirm" style="display:none">
+      <div id="modal-content">
+        <p id="modal-message"></p>
+        <button id="modal-btn-confirm">Konfirmasi</button>
+        <button id="modal-btn-cancel">Batal</button>
+      </div>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/game.js"></script>
+  </body>
+</html>
